@@ -44,7 +44,7 @@ public class TokenPersonalizado {
             
         }
         if (_token == "Variable booleana") {
-             return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end +"(Value = "+String.valueOf(_lexema)+")" +";";
+             return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end +"(Value = "+String.valueOf(_lexema.toLowerCase())+")" +";";
            
         }
       return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end   +";";
