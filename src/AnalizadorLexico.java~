@@ -346,11 +346,13 @@ public class AnalizadorLexico {
  
  // Se agregó una propiedad para verificar si existen tokens pendientes
  private boolean _existenTokens = false;
- 
+ private boolean _existenErrores = false;
  public boolean existenTokens(){
  return this._existenTokens;
  }
-
+public boolean existenError(){
+ return this._existenErrores;
+ }
  
 
 
@@ -795,7 +797,8 @@ public class AnalizadorLexico {
           case 22: break;
           case 10: 
             { TokenPersonalizado t = new TokenPersonalizado("comentario Incompleto", "Error", yycolumn, yyline);
- this._existenTokens = false;
+ this._existenTokens = true;
+ this._existenErrores = true;
  return t;
             }
           case 23: break;

@@ -43,8 +43,7 @@ public boolean existenError(){
  Numero = {Digito} {Digito}*
  Letra = [A-Za-z]
  Identificador = {Letra} ({Letra}|{Numero}|"_")*
- Simbolo = "+"|"-"|"*"|"/"|"%"|"<"|"<="|">"|">="|"="|"=="|"!="|"&&"|"||"|"!"| ";"|","|"."|"["| "]"|"("|")"|"{"|"}"
- 
+Simbolo = "+"|"-"|"*"|"/"|"%"|"<"|"<="|">"|">="|"="|"=="|"!="|"&&"|"||"|"!"| ";"|","|"."|"["| "]"|"("|")"|"{"|"}"|"()"|"[]"|"{}" 
  Espacio = " "
  SaltoDeLinea = \n|\r|\r\n
  InputCharacter = [^\r\n]
