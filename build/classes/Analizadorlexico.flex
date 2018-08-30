@@ -38,7 +38,7 @@ public boolean existenError(){
  
  Error =  "/*" [^*]
  PalabrasReservada = "void"|"int"|"double"|"bool"|"string"|"class"|"interface"|"null"|"this"|"extends"|"implements"|"for"|"while"|"if"|"else"|"return"|"break"|"New"|"New Array"
- Booleanas = ("true"|"false"|"TRUE"|"FALSE")+
+ Booleanas = ("true"|"false"|"TRUE"|"FALSE")
  Digito = [0-9]
  Numero = {Digito} {Digito}*
  Letra = [A-Za-z]
@@ -100,7 +100,7 @@ StringCharacter = \"[^\"]([^\r\n\"\\])*\"
  return t;
 }
 {Numero} {
- TokenPersonalizado t = new TokenPersonalizado(yytext(), "Constante Enetera", yycolumn, yyline);
+ TokenPersonalizado t = new TokenPersonalizado(yytext(), "Constante Entera", yycolumn, yyline);
  this._existenTokens = true;
  return t;
 }

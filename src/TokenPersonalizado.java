@@ -25,11 +25,27 @@ public class TokenPersonalizado {
     }
    
     public String toString(){
-        if (_token == "Cadena String (recortada)" && _lexema.length() > 36 ) {
-            _lexema = _lexema.substring(0, 36) +"\"";
+        if (_token == "Identificador" && _lexema.length() > 31 ) {
+            _lexema = _lexema.substring(0, 31) +"\"";
+            _token = "Identificador (Recortado)";
         }
         if (_token == "Error") {
             return "Comentario incompleto" +" at line "+this._line+";";
+        }
+        if (_token == "Constante Entera") {
+            return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end +"(Value = "+String.valueOf(Integer.parseInt(_lexema))+")" +";";
+        }
+        if ( _token == "Constante Double") {
+            return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end +"(Value = "+String.valueOf(Double.parseDouble(_lexema))+")" +";";
+
+        }
+        if (_token=="Constante Hex") {
+            return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end +"(Value = "+String.valueOf(_lexema)+")" +";";
+            
+        }
+        if (_token == "Variable booleana") {
+             return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end +"(Value = "+String.valueOf(_lexema)+")" +";";
+           
         }
       return "Lexema: " + this._lexema + " Token: " + this._token +" at line "+this._line+", "+"column "+this._column +"-" + this._column_end   +";";
     }
