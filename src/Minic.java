@@ -30,8 +30,7 @@ public class Minic {
    BufferedReader buffer = new BufferedReader(new FileReader(archivo));
    AnalizadorLexico analizadorJFlex = new AnalizadorLexico(buffer);
    BufferedWriter output = null;
-   System.out.println("Ingrese Ubicacion Archivo de Salida");
-   String out = s.nextLine();
+   String out = archivo +".out";
    File file = new File(out);
             output = new BufferedWriter(new FileWriter(file));
   while(true){
