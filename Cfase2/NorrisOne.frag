@@ -74,5 +74,7 @@ interface NorrisInterface {
 	void CabezaNorris(int cuarzo, int oro, int piedra);
 	void BrazoDerechoNorris(int metal);
 	void BrazoIzquierdoNorris(int vibranio, int oro);
+	void PieDerechoNorris();
+	void PieIzquierdoNorris();
 }
 

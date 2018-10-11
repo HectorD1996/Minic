@@ -170,7 +170,7 @@ StringCharacter = \"[^\"]([^\r\n\"\\])*\"
 ")" { System.out.print(yytext()); return symbol(sym.RPAR); }
 "{" { System.out.print(yytext()); return symbol(sym.LLLAV); }
 "}" { System.out.print(yytext()); return symbol(sym.RLLAV); }
-"()" { System.out.print(yytext()); return symbol(sym.PARS); }
+//"()" { System.out.print(yytext()); return symbol(sym.PARS); }
 "[]" { System.out.print(yytext()); return symbol(sym.CORS); }
 "{}" {}
 
