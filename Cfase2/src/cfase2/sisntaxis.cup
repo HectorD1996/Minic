@@ -1,0 +1,231 @@
+
+   
+   
+/* ----------------------Preliminary Declarations Section--------------------*/
+   package cfase2; 
+
+/* Import the class java_cup.runtime.*  */
+import java_cup.runtime.*;
+   
+/* Parser code to change the way the parser reports errors (include
+   line and column number of the error). */
+parser code {:
+    
+    /* Change the method report_error so it will display the line and
+       column of where the error occurred in the input as well as the
+       reason for the error which is passed into the method in the
+       String 'message'. */
+    public void report_error(String message, Object info) {
+   
+        /* Create a StringBuilder called 'm' with the string 'Error' in it. */
+        StringBuilder m = new StringBuilder("Error");
+   
+        /* Check if the information passed to the method is the same
+           type as the type java_cup.runtime.Symbol. */
+
+        if (info instanceof java_cup.runtime.Symbol) {
+            /* Declare a java_cup.runtime.Symbol object 's' with the
+               information in the object info that is being typecasted
+               as a java_cup.runtime.Symbol object. */
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+   
+            /* Check if the line number in the input is greater or
+               equal to zero. */
+            if (s.left >= 0) {                
+                /* Add to the end of the StringBuilder error message
+                   the line number of the error in the input. */
+                m.append(" in line "+(s.left+1));   
+                /* Check if the column number in the input is greater
+                   or equal to zero. */
+                if (s.right >= 0)                    
+                    /* Add to the end of the StringBuilder error message
+                       the column number of the error in the input. */
+                    m.append(", column "+(s.right+1));
+            }
+        }
+   
+        /* Add to the end of the StringBuilder error message created in
+           this method the message that was passed into this method. */
+        m.append(" : "+message);
+   
+        /* Print the contents of the StringBuilder 'm', which contains
+           an error message, out on a line. */
+        System.err.println(m);
+    }
+   
+    /* Change the method report_fatal_error so when it reports a fatal
+       error it will display the line and column number of where the
+       fatal error occurred in the input as well as the reason for the
+       fatal error which is passed into the method in the object
+       'message' and then exit.*/
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+:};
+   
+
+   
+/* ------------Declaration of Terminals and Non Terminals Section----------- */
+   
+/* Terminals (tokens returned by the scanner). */
+terminal VOID, INT, DOUBLE,LPAR,COMMA, RPAR, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS, IMPLEMENTS, FOR, IF, ELSE, RETURN, BREAK, NEW, NEWARRAY, PRINT, PLUS,MINUS,TIMES,DIV,MOD,LESS,LESSEQ,GREATER,GREATEREQ,EQUALS,EQTO,NOTEQ,AMPERSONS,EXCLAM,IDENT, OR,SEMI,CORS,LLLAV,RLLAV,WHILE,READINTEGER,PARS,READLINE,MALLOC,PERIOD,LCOR,RCOR,GETBYTE,SETBYTE;
+terminal Object intConstant, doubleConstant, boolConstant, stringConstant, hexConstant;
+
+/* Non terminals */
+non terminal Start, Program, Decl, VariableDecl, Variable, Type, FunctionDecl,FuncCont, Formals, ClassDecl,Imp,ImpID,ClassField ,Field,Ext, InterfaceDecl,InterfaceProt, Prototype,ProtCont, StmtBlock,StmtVar, Stmt,StmtStmt, StmtExpr, IfStmt, ElseIfStmt, WhileStmt,ForStmt,ReturnStmt, BreakStmt,PrintStmt,ExprPrint,Expr,LValue,Call,CallCont,LibCall,Actuals,Constant;
+
+/* Precedences */
+precedence left PLUS, MINUS, TIMES, DIV, MOD;
+precedence left LESS, LESSEQ, GREATER, GREATEREQ, EQUALS, EQTO, NOTEQ, AMPERSONS, OR, EXCLAM ;
+precedence left ELSE;
+precedence left IDENT;
+
+/* The grammar rules */
+Start ::= Program;
+
+Program ::= Program Decl
+        | /* ε */;
+
+Decl ::= VariableDecl
+    | FunctionDecl
+    |ClassDecl
+    |InterfaceDecl
+    |error SEMI
+    |error RLLAV;
+
+VariableDecl ::= Variable SEMI ;
+
+Variable ::= Type IDENT ;
+
+Type ::= INT
+| DOUBLE
+| BOOL
+| STRING
+| IDENT
+| Type CORS ;
+
+FunctionDecl ::= Type FuncCont
+| VOID FuncCont ;
+
+FuncCont ::= IDENT LPAR Formals RPAR StmtBlock 
+    |IDENT PARS StmtBlock;
+
+Formals ::= Formals COMMA Variable
+| Variable
+| /* ε */;
+
+ClassDecl ::= CLASS IDENT Ext Imp LLLAV ClassField RLLAV ;
+
+Ext ::= EXTENDS IDENT
+| /* ε */;
+
+Imp ::= IMPLEMENTS ImpID
+| /* ε */;
+
+ImpID ::= ImpID COMMA IDENT
+| IDENT ;
+
+
+ClassField ::= ClassField Field
+| /* ε */;
+
+Field ::= VariableDecl
+| FunctionDecl ;
+
+InterfaceDecl ::= INTERFACE IDENT LLLAV InterfaceProt RLLAV;
+
+InterfaceProt ::= InterfaceProt Prototype
+| /* ε */;
+
+Prototype ::= Type ProtCont
+| VOID ProtCont;
+
+ProtCont ::= IDENT LPAR Formals RPAR SEMI;
+
+StmtBlock ::= LLLAV StmtVar StmtStmt RLLAV;
+
+StmtVar ::= StmtVar VariableDecl
+| /* ε */;
+
+StmtStmt ::= Stmt StmtStmt 
+| /* ε */;
+
+Stmt ::= StmtExpr SEMI
+|IfStmt
+|WhileStmt
+|ForStmt
+|BreakStmt
+|ReturnStmt
+|PrintStmt
+|StmtBlock;
+
+StmtExpr ::= Expr
+| /* ε */;
+
+IfStmt ::= IF LPAR Expr RPAR Stmt ElseIfStmt ;
+
+ElseIfStmt ::= ELSE Stmt
+| /* ε */;
+
+WhileStmt ::= WHILE LPAR Expr RPAR Stmt ;
+
+ForStmt ::= FOR LPAR StmtExpr SEMI Expr SEMI StmtExpr RPAR Stmt ;
+
+ReturnStmt ::= RETURN StmtExpr SEMI ;
+
+BreakStmt ::= BREAK SEMI ;
+
+PrintStmt ::= PRINT LPAR ExprPrint RPAR SEMI ;
+
+ExprPrint ::= ExprPrint COMMA Expr
+| Expr ;
+
+Expr::= LValue EQUALS Expr
+|Constant
+|LValue
+|THIS
+|Call
+|LPAR Expr RPAR
+|Expr PLUS Expr
+|Expr MINUS Expr
+|Expr TIMES Expr
+|Expr DIV Expr
+|Expr MOD Expr
+|MINUS Expr
+|Expr LESS Expr
+|Expr LESSEQ Expr
+|Expr GREATER Expr
+|Expr GREATEREQ Expr
+|Expr EQTO Expr
+|Expr NOTEQ Expr
+|Expr AMPERSONS Expr
+|Expr OR Expr
+|EXCLAM Expr
+|NEW LPAR IDENT RPAR
+|NEWARRAY LPAR Expr COMMA Type RPAR
+|READINTEGER PARS
+|READLINE PARS
+| MALLOC LPAR Expr RPAR ;
+
+LValue ::= IDENT
+| Expr PERIOD IDENT
+| Expr LCOR Expr RCOR ;
+
+Call ::= IDENT LPAR Actuals RPAR
+| Expr PERIOD IDENT CallCont
+| Expr PERIOD LibCall CallCont ;
+
+CallCont ::= LPAR Actuals RPAR ;
+
+LibCall ::= GETBYTE LPAR Expr RPAR
+| SETBYTE LPAR Expr COMMA Expr RPAR ;
+
+Actuals ::= ExprPrint
+| /* ε */;
+
+Constant ::= intConstant
+| doubleConstant
+| boolConstant
+| stringConstant
+| NULL ;
