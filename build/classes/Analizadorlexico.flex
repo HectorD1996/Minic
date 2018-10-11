@@ -4,6 +4,7 @@
 %column
 %public
 %class AnalizadorLexico
+%cup
 %{
  
  /* Código personalizado */
@@ -37,7 +38,7 @@ public boolean existenError(){
 /* Inicio de Expresiones regulares */
  
  Error =  "/*" [^*]
- PalabrasReservada = "void"|"int"|"double"|"bool"|"string"|"class"|"interface"|"null"|"this"|"extends"|"implements"|"for"|"while"|"if"|"else"|"return"|"break"|"New"|"New Array"
+ PalabrasReservada = "void"|"int"|"double"|"bool"|"string"|"class"|"interface"|"null"|"this"|"extends"|"implements"|"for"|"while"|"if"|"else"|"return"|"break"|"New"|"New Array"|"Print"|"ReadInteger"|"ReadLine"|"Malloc"
  Booleanas = ("true"|"false"|"TRUE"|"FALSE")
  Digito = [0-9]
  Numero = {Digito} {Digito}*
